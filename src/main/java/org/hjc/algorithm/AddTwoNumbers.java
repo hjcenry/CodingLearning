@@ -28,6 +28,9 @@ public class AddTwoNumbers {
     原因：342 + 465 = 807
 
     url:https://leetcode-cn.com/problems/add-two-numbers/
+
+    思路：按照正常数学思维进行每一位数字的加法，如果进位，则标识进位，并在下一位执行加法时加上进位数
+    注意点：若两链表长度不相等，其中一个链表加完后，可直接把另一个剩余的链表拼接过来（修改节点指向即可），这样可以大幅减少运算时间
     */
 
     public static void main(String[] args) {
