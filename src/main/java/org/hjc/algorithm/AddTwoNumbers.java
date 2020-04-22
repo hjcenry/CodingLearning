@@ -44,30 +44,39 @@ public class AddTwoNumbers {
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode finalNode = null;
         ListNode headNode = null;
-        ListNode incrNode = new ListNode(0);
+        int incrNum = 0;
         ListNode restNode = null;
         while (l1 != null || l2 != null) {
             // 当前节点数值，加上进位数值
-            int num = incrNode.val;
+            int num = incrNum;
             if (l1 != null) {
                 if (l2 == null) {
                     // 一个链表加完了，直接把后面的链表接上，退出循环
-                    restNode = finalNode.next = l1;
+                    if (finalNode == null) {
+                        restNode = headNode = finalNode = l1;
+                    } else {
+                        restNode = finalNode.next = l1;
+                    }
                     break;
                 }
                 // 累加链表1节点数值
                 num = num + l1.val;
             } else {
                 // 一个链表加完了，直接把后面的链表接上，退出循环
-                restNode = finalNode.next = l2;
+                if (finalNode == null) {
+                    restNode = headNode = finalNode = l2;
+                } else {
+                    restNode = finalNode.next = l2;
+                }
                 break;
             }
             // 累加链表2节点数值
             num = num + l2.val;
-            // 记录是否进位
-            incrNode.val = num >= 10 ? 1 : 0;
+            // 记录进位数
+            incrNum = num / 10;
             // 获取当前节点数值
             num = num % 10;
+            // 插入尾节点
             if (finalNode == null) {
                 finalNode = new ListNode(num);
             } else {
@@ -82,9 +91,8 @@ public class AddTwoNumbers {
             l1 = l1.next;
             l2 = l2.next;
         }
-        if (incrNode.val == 1) {
-            restNode = restNode == null ? new ListNode(0) : restNode;
-            finalNode.next = addTwoNumbers(incrNode, restNode);
+        if (incrNum == 1) {
+            finalNode.next = addTwoNumbers(new ListNode(incrNum), restNode);
         }
         return headNode;
     }
