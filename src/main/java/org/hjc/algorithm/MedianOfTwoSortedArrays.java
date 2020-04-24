@@ -1,5 +1,7 @@
 package org.hjc.algorithm;
 
+import java.util.Arrays;
+
 /**
  * 寻找两个有序数组的中位数
  *
@@ -50,14 +52,17 @@ public class MedianOfTwoSortedArrays {
      */
 
     public static void main(String[] args) {
-        int[] nums1 = new int[]{1, 3};
-        int[] nums2 = new int[]{2};
+        int[] nums = new int[]{1, 3, 4, 8, 9, 18};
+        int result = Arrays.binarySearch(nums, 0);
+        System.out.println(result);
+//        int[] nums1 = new int[]{1, 3};
+//        int[] nums2 = new int[]{2};
 //        int[] nums1 = new int[]{1, 2};
 //        int[] nums2 = new int[]{3, 4};
 //        int[] nums1 = new int[]{3};
 //        int[] nums2 = new int[]{-2, -1};
-        double median = findMedianSortedArrays(nums1, nums2);
-        System.out.println(median);
+//        double median = findMedianSortedArrays(nums1, nums2);
+//        System.out.println(median);
     }
 
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
