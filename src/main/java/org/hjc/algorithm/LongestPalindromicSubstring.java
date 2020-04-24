@@ -42,6 +42,19 @@ public class LongestPalindromicSubstring {
     }
 
     public String longestPalindrome(String s) {
+        int len = s.length();
+        String maxFindString = null;
+        // 分别从字符串的两端向中间缩小范围遍历
+        for (int i = 0; i < len; i++) {
+            char forwardChar = s.charAt(i);
+            for (int j = len - 1; j > i; j--) {
+                char behindChar = s.charAt(j);
+                if (forwardChar == behindChar) {
+                    // 首尾相同，判断是否为回文串
+
+                }
+            }
+        }
         return null;
     }
 }
