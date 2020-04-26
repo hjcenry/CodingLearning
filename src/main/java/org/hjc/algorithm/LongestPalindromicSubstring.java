@@ -149,6 +149,7 @@ public class LongestPalindromicSubstring {
      * 动态规划解法
      * 中心扩散的方法，其实做了很多重复计算。动态规划就是为了减少重复计算的问题。动态规划听起来很高大上。其实说白了就是空间换时间，将计算结果暂存起来，避免重复计算。作用和工程中用 redis 做缓存有异曲同工之妙。
      * 我们用一个 boolean dp[l][r] 表示字符串从 i 到 j 这段是否为回文。试想如果 dp[l][r]=true，我们要判断 dp[l-1][r+1] 是否为回文。只需要判断字符串在(l-1)和（r+1)两个位置是否为相同的字符
+     * 时间复杂度O(n2)
      *
      * @param s
      * @return
@@ -176,12 +177,9 @@ public class LongestPalindromicSubstring {
                         maxLen = r - l + 1;
                         maxStart = l;
                         maxEnd = r;
-
                     }
                 }
-
             }
-
         }
         return s.substring(maxStart, maxEnd + 1);
     }
