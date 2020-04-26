@@ -37,24 +37,60 @@ public class LongestPalindromicSubstring {
     */
 
     public static void main(String[] args) {
-        String s = "";
-        System.out.println(new LongestPalindromicSubstring().longestPalindrome(s));
+        System.out.println(new LongestPalindromicSubstring().longestPalindrome("babadada"));
+//        System.out.println(new LongestPalindromicSubstring().longestPalindrome("aaabaaaa"));
+//        System.out.println(new LongestPalindromicSubstring().longestPalindrome("babad"));
+//        System.out.println(new LongestPalindromicSubstring().longestPalindrome("cbbd"));
+//        System.out.println(new LongestPalindromicSubstring().longestPalindrome(""));
     }
 
     public String longestPalindrome(String s) {
         int len = s.length();
-        String maxFindString = null;
+        if (len == 0) {
+            return s;
+        }
+        int maxFindStringStartIndex = 0;
+        int maxFindStringEndIndex = 0;
         // 分别从字符串的两端向中间缩小范围遍历
         for (int i = 0; i < len; i++) {
             char forwardChar = s.charAt(i);
+            int maxLen = maxFindStringEndIndex - maxFindStringStartIndex + 1;
+            if (len - i <= maxLen) {
+                // 剩余字符还没有最大回文串字符长，就不用了继续遍历了
+                break;
+            }
             for (int j = len - 1; j > i; j--) {
                 char behindChar = s.charAt(j);
+                int sLen = j - i + 1;
+                if (sLen <= maxLen) {
+                    // 剩余字符还没有最大回文串字符长，就不用了继续遍历了
+                    break;
+                }
                 if (forwardChar == behindChar) {
                     // 首尾相同，判断是否为回文串
-
+                    if (!isPalindrome(s, i, j, sLen % 2 != 0)) {
+                        continue;
+                    }
+                    maxFindStringStartIndex = i;
+                    maxFindStringEndIndex = j;
+                    break;
                 }
             }
         }
-        return null;
+        return s.substring(maxFindStringStartIndex, maxFindStringEndIndex + 1);
     }
+
+    private boolean isPalindrome(String s, int startIndex, int endIndex, boolean isLenOdd) {
+        int midIndex = (startIndex + endIndex) / 2;
+        for (int index = startIndex; isLenOdd ? index < midIndex : index <= midIndex; index++) {
+            char forwardChar = s.charAt(index);
+            int behindIndex = endIndex - (index - startIndex);
+            char behindChar = s.charAt(behindIndex);
+            if (forwardChar != behindChar) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
