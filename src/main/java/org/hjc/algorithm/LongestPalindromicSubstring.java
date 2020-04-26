@@ -109,40 +109,29 @@ public class LongestPalindromicSubstring {
      * @return
      */
     public String longestPalindrome2(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null || s.length() < 1) {
             return "";
         }
-        int strLen = s.length();
-        int left = 0;
-        int right = 0;
-        int len = 1;
-        int maxStart = 0;
-        int maxLen = 0;
-
-        for (int i = 0; i < strLen; i++) {
-            left = i - 1;
-            right = i + 1;
-            while (left >= 0 && s.charAt(left) == s.charAt(i)) {
-                len++;
-                left--;
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
             }
-            while (right < strLen && s.charAt(right) == s.charAt(i)) {
-                len++;
-                right++;
-            }
-            while (left >= 0 && right < strLen && s.charAt(right) == s.charAt(left)) {
-                len = len + 2;
-                left--;
-                right++;
-            }
-            if (len > maxLen) {
-                maxLen = len;
-                maxStart = left;
-            }
-            len = 1;
         }
-        return s.substring(maxStart + 1, maxStart + maxLen + 1);
+        return s.substring(start, end + 1);
+    }
 
+    private int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
     }
 
     /**
@@ -170,7 +159,7 @@ public class LongestPalindromicSubstring {
 
         for (int r = 1; r < strLen; r++) {
             for (int l = 0; l < r; l++) {
-                if (s.charAt(l) == s.charAt(r) && (r - l <= 2 || dp[l + 1][r - 1])) {
+                if (s.charAt(l) == s.charAt(r) && (r - l <= 3 || dp[l + 1][r - 1])) {
                     // 如果首尾字符相当 && （首尾中间字符串是回文串 || 首尾字符数只有3个以下）
                     dp[l][r] = true;
                     if (r - l + 1 > maxLen) {
