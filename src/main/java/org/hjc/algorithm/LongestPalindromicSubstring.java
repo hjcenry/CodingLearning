@@ -37,7 +37,7 @@ public class LongestPalindromicSubstring {
     */
 
     public static void main(String[] args) {
-        System.out.println(new LongestPalindromicSubstring().longestPalindrome("babadada"));
+        System.out.println(new LongestPalindromicSubstring().longestPalindrome("上海自来水来自海上"));
 //        System.out.println(new LongestPalindromicSubstring().longestPalindrome("aaabaaaa"));
 //        System.out.println(new LongestPalindromicSubstring().longestPalindrome("babad"));
 //        System.out.println(new LongestPalindromicSubstring().longestPalindrome("cbbd"));
