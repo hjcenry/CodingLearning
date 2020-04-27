@@ -1,5 +1,8 @@
 package org.hjc.algorithm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Z 字形变换
  *
@@ -59,17 +62,6 @@ public class ZigZagConversion {
     E C   I H   N
     T     S     G
 
-    思路：
-
-列数 0 1 2 3 4   5 6  7  8  9  10
-
-    1          11             21
-    2       10 12          20 22
-    3     9    13       19    23
-    4   8      14    18
-    5 7        15 17
-    6          16
-
     url:https://leetcode-cn.com/problems/zigzag-conversion/
      */
 
@@ -93,29 +85,47 @@ public class ZigZagConversion {
 //        System.out.println(new ZigZagConversion().convert("PAYPALISHIRING", 4));
     }
 
+    /**
+     * 寻找规律逐行读取
+     * 分析每一行读取字符的规律，按照一定的数学规律来逐行逐个字符读取
+     *
+     * 分析Z字形字符转换时，行数与字符下标的关系
+     *
+     * 列数 0 1 2 3 4 5   6  7  8  9 10
+     *
+     *     0         10             20
+     *     1       9 11          19 21
+     *     2     8   12       18    22
+     *     3   7     13    17
+     *     4 6       14 16
+     *     5         15
+     *
+     * @param s
+     * @param numRows
+     * @return
+     */
     public String convert(String s, int numRows) {
-        if (numRows == 1) {
+        if (numRows <= 1) {
             return s;
         }
         int len = s.length();
         // 新的字符数组
         char[] newStrChars = new char[len];
         int charIndex = 0;
-        // 总列数
         for (int row = 0; row < numRows; row++) {
+            // 逐行读取
             for (int col = 0; col < len; col = col + numRows - 1) {
-                // 根据列数获取元素下标
-                int strIndex = 2 * col + row;
-
+                // 读取列按照相同规律一段一段读取
                 if (row != 0 && row != numRows - 1 && col > 0) {
-                    // 非首尾两行先取中间的数,当前列的第一行的index-行数
+                    // 非首尾两行先取中间的数:当前列的第一行的index减去行数（即从当前列的顶部往前推row个数，就是要取得的下标）
                     int midIndex = col * 2 - row;
                     if (midIndex >= len) {
                         break;
                     }
                     newStrChars[charIndex++] = s.charAt(midIndex);
                 }
-                // 取竖线列上的数
+                // 取竖线列上的数，根据行数和列数获取元素下标
+                int strIndex = 2 * col + row;
                 if (strIndex >= len) {
                     break;
                 }
@@ -123,5 +133,39 @@ public class ZigZagConversion {
             }
         }
         return String.copyValueOf(newStrChars, 0, len);
+    }
+
+    /**
+     * 按Z字形阅读顺序按顺序读取
+     *
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public String convert2(String s, int numRows) {
+        if (numRows <= 1) {
+            return s;
+        }
+        List<StringBuilder> rows = new ArrayList<StringBuilder>();
+        for (int i = 0; i < numRows; i++) {
+            // 每一行用一个StringBuilder来存储当前行的字符（这样做其实会稍微耗时一点，因为StringBuilder的每一次append都会根据长度来copy扩展char数组）
+            rows.add(new StringBuilder());
+        }
+        // 通过flag标识来确定字符读取是正序还是倒序，并把字符追加到对应那行的StringBuilder中
+        int i = 0, flag = -1;
+        for (char c : s.toCharArray()) {
+            rows.get(i).append(c);
+            if (i == 0 || i == numRows - 1) {
+                // 调换读取顺序
+                flag = -flag;
+            }
+            i += flag;
+        }
+        // 拼装所有行的字符结果
+        StringBuilder res = new StringBuilder();
+        for (StringBuilder row : rows) {
+            res.append(row);
+        }
+        return res.toString();
     }
 }
