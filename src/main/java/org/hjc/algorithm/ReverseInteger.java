@@ -1,7 +1,5 @@
 package org.hjc.algorithm;
 
-import org.omg.CORBA.INTERNAL;
-
 /**
  * 整数反转
  *
