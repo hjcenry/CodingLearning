@@ -111,6 +111,10 @@ public class ZigZagConversion {
         int len = s.length();
         // 新的字符数组
         char[] newStrChars = new char[len];
+
+//        （这样做其实会稍微耗时一点，因为StringBuilder的每一次append都会根据长度来copy扩展char数组）
+//        StringBuilder newStrBuilder = new StringBuilder(len);
+
         int charIndex = 0;
         for (int row = 0; row < numRows; row++) {
             // 逐行读取
@@ -123,6 +127,7 @@ public class ZigZagConversion {
                         break;
                     }
                     newStrChars[charIndex++] = s.charAt(midIndex);
+//                    newStrBuilder.append(s.charAt(midIndex));
                 }
                 // 取竖线列上的数，根据行数和列数获取元素下标
                 int strIndex = 2 * col + row;
@@ -130,9 +135,11 @@ public class ZigZagConversion {
                     break;
                 }
                 newStrChars[charIndex++] = s.charAt(strIndex);
+//                newStrBuilder.append(s.charAt(strIndex));
             }
         }
         return String.copyValueOf(newStrChars, 0, len);
+//        return newStrBuilder.toString();
     }
 
     /**
@@ -148,7 +155,7 @@ public class ZigZagConversion {
         }
         List<StringBuilder> rows = new ArrayList<StringBuilder>();
         for (int i = 0; i < numRows; i++) {
-            // 每一行用一个StringBuilder来存储当前行的字符（这样做其实会稍微耗时一点，因为StringBuilder的每一次append都会根据长度来copy扩展char数组）
+            // 每一行用一个StringBuilder来存储当前行的字符
             rows.add(new StringBuilder());
         }
         // 通过flag标识来确定字符读取是正序还是倒序，并把字符追加到对应那行的StringBuilder中
