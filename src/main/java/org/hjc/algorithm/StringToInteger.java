@@ -118,7 +118,7 @@ public class StringToInteger {
             // 判断c是否为数字，0的字符ascii码是48,9的字符ascii码是57
             if (c >= '0' && c <= '9') {
                 if (!isValid) {
-                    flag = flag == 0 ? 1 : flag;
+                    flag = 1;
                     isValid = true;
                 }
                 // 字符减去0的ascii码，就是对应的数字
@@ -135,20 +135,16 @@ public class StringToInteger {
             } else {
                 if (isValid) {
                     return resultNumber * flag;
-                } else {
-                    if (c == ' ') {
-                        continue;
-                    }
-                    if (c == '+' || c == '-') {
-                        if (flag != 0) {
-                            return 0;
-                        }
-                        flag = c == '+' ? 1 : -1;
-                        isValid = true;
-                        continue;
-                    }
-                    return 0;
                 }
+                if (c == ' ') {
+                    continue;
+                }
+                if (c == '+' || c == '-') {
+                    flag = c == '+' ? 1 : -1;
+                    isValid = true;
+                    continue;
+                }
+                return 0;
             }
         }
         return resultNumber * flag;
