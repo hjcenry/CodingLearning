@@ -1,5 +1,8 @@
 package org.hjc.algorithm;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * 正则表达式匹配
  *
@@ -10,7 +13,12 @@ public class RegularExpressionMatching {
 
     public static void main(String[] args) {
         RegularExpressionMatching clz = new RegularExpressionMatching();
-        System.out.println(clz.isMatch("aaa", "*"));
+//        System.out.println(clz.isMatch("aa", "a"));
+//        System.out.println(clz.isMatch("aa", "a"));
+//        System.out.println(clz.isMatch("aa", "a*"));
+//        System.out.println(clz.isMatch("ab", ".*"));
+        System.out.println(clz.isMatch("aab", "c*a*b"));
+//        System.out.println(clz.isMatch("mississippi", "mis*is*p*."));
     }
 
     /*
@@ -106,7 +114,50 @@ public class RegularExpressionMatching {
 
     url:https://leetcode-cn.com/problems/regular-expression-matching/
      */
+
     public boolean isMatch(String s, String p) {
+        int sLen = s.length();
+        int pLen = p.length();
+        for (int i = 0; i < sLen; i++) {
+            char lastChar = 0;
+            int pPointer = 0;
+            boolean isStarUsed = false;
+            for (int j = i; j < sLen; j++) {
+                char sChar = s.charAt(j);
+                if (pPointer >= pLen) {
+                    return false;
+                }
+                char pChar = p.charAt(pPointer);
+                if (sChar == pChar) {
+                    lastChar = sChar;
+                    pPointer++;
+                    continue;
+                } else if (j < sLen - 1 && p.charAt(j + 1) == '*') {
+                    // 如果字符不等，后面是*，也可以抵消掉
+                    pPointer = pPointer + 2;
+                    continue;
+                }
+                if (pChar == '.') {
+                    lastChar = pChar;
+                    pPointer++;
+                    continue;
+                }
+                if (pChar == '*') {
+                    isStarUsed = true;
+                    continue;
+                }
+//                if (pChar == '*') {
+//                    pPointer--;
+//                }
+//                if (pChar == '*' && (lastChar == '.' || lastChar == sChar)) {
+//                    continue;
+//                }
+                return false;
+            }
+            if (pPointer >= pLen - 1) {
+                return true;
+            }
+        }
         return false;
     }
 }
