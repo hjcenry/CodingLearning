@@ -13,12 +13,14 @@ public class RegularExpressionMatching {
 
     public static void main(String[] args) {
         RegularExpressionMatching clz = new RegularExpressionMatching();
-//        System.out.println(clz.isMatch("aa", "a"));
+        System.out.println(clz.isMatch2("aaa", "a*a"));
+//        System.out.println(clz.isMatch("aaa", "aaaa"));
 //        System.out.println(clz.isMatch("aa", "a"));
 //        System.out.println(clz.isMatch("aa", "a*"));
 //        System.out.println(clz.isMatch("ab", ".*"));
-        System.out.println(clz.isMatch("aab", "c*a*b"));
+//        System.out.println(clz.isMatch("aab", "c*a*b"));
 //        System.out.println(clz.isMatch("mississippi", "mis*is*p*."));
+//        System.out.println(clz.isMatch("mississippi", "mis*is*ip*."));
     }
 
     /*
@@ -115,49 +117,113 @@ public class RegularExpressionMatching {
     url:https://leetcode-cn.com/problems/regular-expression-matching/
      */
 
-    public boolean isMatch(String s, String p) {
-        int sLen = s.length();
-        int pLen = p.length();
-        for (int i = 0; i < sLen; i++) {
-            char lastChar = 0;
-            int pPointer = 0;
-            boolean isStarUsed = false;
-            for (int j = i; j < sLen; j++) {
-                char sChar = s.charAt(j);
-                if (pPointer >= pLen) {
-                    return false;
+    public boolean isMatch(String text, String pattern) {
+        if (pattern.isEmpty()) {
+            return text.isEmpty();
+        }
+        boolean firstMatch = (!text.isEmpty() &&
+                (pattern.charAt(0) == text.charAt(0) || pattern.charAt(0) == '.'));
+
+        if (pattern.length() >= 2 && pattern.charAt(1) == '*') {
+            return (isMatch(text, pattern.substring(2)) ||
+                    (firstMatch && isMatch(text.substring(1), pattern)));
+        } else {
+            return firstMatch && isMatch(text.substring(1), pattern.substring(1));
+        }
+    }
+
+    public boolean isMatch2(String s, String p) {
+        int m = s.length();
+        int n = p.length();
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        dp[0][0] = true;
+        // 这儿实际上隐藏了一个对于 s字符串存在，但是p字符串为空的情况，因为一定会为false，并且这个是dp的默认值，因此省去
+        for (int i = 1; i < n + 1; i++) {
+            dp[0][i] = dp[0][i - 1] && p.charAt(i - 1) == '*';
+        }
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (p.charAt(j - 1) == s.charAt(i - 1) || p.charAt(j - 1) == '?') {
+                    // 此处是匹配一个的情况，是匹配多个的特殊情况（匹配多个的表达式：dp[i - 1][j]）
+                    dp[i][j] = dp[i - 1][j - 1];
                 }
-                char pChar = p.charAt(pPointer);
-                if (sChar == pChar) {
-                    lastChar = sChar;
-                    pPointer++;
-                    continue;
-                } else if (j < sLen - 1 && p.charAt(j + 1) == '*') {
-                    // 如果字符不等，后面是*，也可以抵消掉
-                    pPointer = pPointer + 2;
-                    continue;
+                if (p.charAt(j - 1) == '*') {
+                    // 此处是匹配多个和匹配0个的表达式
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
                 }
-                if (pChar == '.') {
-                    lastChar = pChar;
-                    pPointer++;
-                    continue;
-                }
-                if (pChar == '*') {
-                    isStarUsed = true;
-                    continue;
-                }
-//                if (pChar == '*') {
-//                    pPointer--;
-//                }
-//                if (pChar == '*' && (lastChar == '.' || lastChar == sChar)) {
-//                    continue;
-//                }
-                return false;
-            }
-            if (pPointer >= pLen - 1) {
-                return true;
             }
         }
-        return false;
+        return dp[m][n];
     }
+
+//    /**
+//     * 已放弃，暴力解法，始终不能涵盖到所有的case，学习下别人的最优解法
+//     * @param s
+//     * @param p
+//     * @return
+//     */
+//    public boolean isMatch(String s, String p) {
+//        int sLen = s.length();
+//        int pLen = p.length();
+//
+//        int tailIndex = pLen;
+//        for (int index = pLen - 1; index >= 0; index--) {
+//            if (p.charAt(index) != '*') {
+//                tailIndex = index;
+//                break;
+//            }
+//        }
+//
+//        for (int i = 0; i < sLen; i++) {
+//            int pPointer = 0;
+//            boolean grouped = false;
+//            for (int j = i; j < sLen; j++) {
+//                char sChar = s.charAt(j);
+//                if (pPointer >= pLen) {
+//                    return false;
+//                }
+//                char pChar = p.charAt(pPointer);
+//                if (!grouped) {
+//                    // 按*组成一组进行匹配
+//                    grouped = pPointer < pLen - 1 && p.charAt(pPointer + 1) == '*';
+//                }
+////                int pStartPointer = pPointer;
+//                if ((pPointer = doMatch(sChar, pChar, p, pLen, pPointer, grouped)) == -1) {
+//                    return false;
+//                } else {
+//                    // 按组匹配切指针发生跳跃，则可以往后走 || 普通匹配且指针不在最后一位
+////                    if ((grouped && pPointer != pStartPointer) || (!grouped && j < sLen - 1)) {
+////                        pPointer++;
+////                    }
+//                    if (!grouped && j < sLen - 1) {
+//                        pPointer++;
+//                    }
+//                }
+//            }
+//            if (pPointer >= tailIndex) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private int doMatch(char sChar, char pChar, String p, int pLen, int pPointer, boolean grouped) {
+//        if (!grouped) {
+//            // 按*组成一组进行匹配
+//            grouped = pPointer < pLen - 1 && p.charAt(pPointer + 1) == '*';
+//        }
+//        if (sChar == pChar || pChar == '.') {
+//            return pPointer;
+//        } else {
+//            if (grouped) {
+//                if (pPointer + 2 >= pLen) {
+//                    return -1;
+//                }
+//                pPointer = pPointer + 2;
+//                // 递归调用判断
+//                return doMatch(sChar, p.charAt(pPointer), p, pLen, pPointer, grouped);
+//            }
+//        }
+//        return -1;
+//    }
 }
