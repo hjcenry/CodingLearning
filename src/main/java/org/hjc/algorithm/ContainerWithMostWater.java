@@ -9,7 +9,8 @@ package org.hjc.algorithm;
 public class ContainerWithMostWater {
 
     public static void main(String[] args) {
-        System.out.println(new ContainerWithMostWater().maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7}));
+//        System.out.println(new ContainerWithMostWater().maxArea(new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7}));
+        System.out.println(new ContainerWithMostWater().maxArea(new int[]{5, 2, 12, 1, 5, 3, 4, 11, 9, 4}));
     }
 
     /*
@@ -29,6 +30,23 @@ public class ContainerWithMostWater {
     */
 
     public int maxArea(int[] height) {
-        return 0;
+        int low = 0, high = height.length - 1;
+        int max = 0;
+        int curHeight = 0;
+        while (low != high) {
+            curHeight = Math.min(height[low], height[high]);
+            max = Math.max(max, curHeight * (high - low));
+            if (height[low] > height[high]) {
+                do {
+                    high--;
+                } while (low != high && height[high] < curHeight);
+            } else {
+                do {
+                    low++;
+                } while (low != high && height[low] < curHeight);
+            }
+        }
+        return max;
     }
+
 }
