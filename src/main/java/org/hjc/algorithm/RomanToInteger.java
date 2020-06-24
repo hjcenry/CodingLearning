@@ -108,29 +108,79 @@ public class RomanToInteger {
     */
 
     public int romanToInt(String s) {
-        return 0;
+        int sLen = s.length();
+        int num = 0;
+
+        int pointer = 0;
+        while (pointer < sLen) {
+            Symbol symbol = Symbol.getChar(s.charAt(pointer));
+            if (pointer == sLen - 1) {
+                return num + symbol.num;
+            }
+            Symbol nextSymbol = Symbol.getChar(s.charAt(pointer + 1));
+
+            if (symbol.isOneSymbol()) {
+                // 是当前进制的1
+                if (nextSymbol.symbol != symbol.symbol && nextSymbol.num > symbol.num) {
+                    // 下一位不是1，得到4或者9
+                    num = num + (nextSymbol.num - symbol.num);
+                    pointer = pointer + 2;
+                } else {
+                    num = num + symbol.num;
+                    pointer++;
+                    while (pointer < sLen && nextSymbol.symbol == symbol.symbol) {
+                        num = num + nextSymbol.num;
+                        if (pointer + 1 < sLen) {
+                            nextSymbol = Symbol.getChar(s.charAt(pointer + 1));
+                        }
+                        pointer++;
+                    }
+                }
+            } else {
+                if (!nextSymbol.isOneSymbol()) {
+                    num = num + symbol.num;
+                    pointer++;
+                } else {
+                    num = num + symbol.num;
+                    pointer++;
+                    while (pointer < sLen && nextSymbol.symbol == symbol.oneSymbol) {
+                        num = num + nextSymbol.num;
+                        if (pointer + 1 < sLen) {
+                            nextSymbol = Symbol.getChar(s.charAt(pointer + 1));
+                        }
+                        pointer++;
+                    }
+                }
+            }
+        }
+        return num;
     }
 
     enum Symbol {
         // 1
-        ONE('I', 1),
+        ONE('I', 1, true),
         // 5
         FIVE('V', 'I', 5),
         // 10
-        TEN('X', 'I', 10),
+        TEN('X', 'I', 10, true),
         // 50
         FIFTY('L', 'X', 50),
         // 100
-        HUNDRED('C', 'X', 100),
+        HUNDRED('C', 'X', 100, true),
         // 500
         FIVE_HUNDRED('D', 'C', 500),
         // 1000
-        THOUSAND('M', 'C', 1000),
+        THOUSAND('M', 'C', 1000, true),
         ;
 
-        char symbol;
-        char oneSymbol;
+        char symbol = 0;
+        char oneSymbol = 0;
         int num;
+        boolean isOne = false;
+
+        boolean isOneSymbol() {
+            return isOne;
+        }
 
         Symbol(char symbol, int num) {
             this.symbol = symbol;
@@ -143,16 +193,29 @@ public class RomanToInteger {
             this.num = num;
         }
 
-        static Map<Integer, Character> charMap = new HashMap(7);
+        Symbol(char symbol, int num, boolean isOne) {
+            this.symbol = symbol;
+            this.num = num;
+            this.isOne = isOne;
+        }
+
+        Symbol(char symbol, char oneSymbol, int num, boolean isOne) {
+            this.symbol = symbol;
+            this.oneSymbol = oneSymbol;
+            this.num = num;
+            this.isOne = isOne;
+        }
+
+        static Map<Character, Symbol> charMap = new HashMap(7);
 
         static {
-            for (IntegerToRoman.Symbol symbol : IntegerToRoman.Symbol.values()) {
-                charMap.put(symbol.num, symbol.symbol);
+            for (Symbol symbol : Symbol.values()) {
+                charMap.put(symbol.symbol, symbol);
             }
         }
 
-        static char getChar(int num) {
-            return charMap.get(num);
+        static Symbol getChar(char c) {
+            return charMap.get(c);
         }
     }
 }
