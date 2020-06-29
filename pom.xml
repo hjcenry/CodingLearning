@@ -8,5 +8,12 @@
     <artifactId>coding.learning</artifactId>
     <version>1.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.70</version>
+        </dependency>
+    </dependencies>
 
 </project>
