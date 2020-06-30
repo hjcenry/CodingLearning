@@ -70,6 +70,9 @@ public class ThreeSumClosest {
             int high = nums.length - 1;
             while (low < high) {
                 int sum = nums[i] + nums[low] + nums[high];
+                if (sum == target) {
+                    return sum;
+                }
                 int diff = sum - target;
                 int absDiff = Math.abs(diff);
                 if (closedDiff == -1 || absDiff < closedDiff) {
