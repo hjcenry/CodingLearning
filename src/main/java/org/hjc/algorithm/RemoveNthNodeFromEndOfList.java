@@ -1,5 +1,8 @@
 package org.hjc.algorithm;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 删除链表的倒数第N个节点
  *
@@ -18,7 +21,11 @@ public class RemoveNthNodeFromEndOfList {
         l2.next = l3;
         l3.next = l4;
         l4.next = l5;
-        System.out.println(new RemoveNthNodeFromEndOfList().removeNthFromEnd(l1, 2).val);
+        ListNode node = new RemoveNthNodeFromEndOfList().removeNthFromEnd(l1, 2);
+        while (node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
     }
 
     /*
@@ -56,6 +63,24 @@ public class RemoveNthNodeFromEndOfList {
     */
 
     public ListNode removeNthFromEnd(ListNode head, int n) {
+        Map<Integer, ListNode> nodeIndex = new HashMap<Integer, ListNode>();
+        ListNode node = head;
+        int index = 0;
+        while (node != null) {
+            index++;
+            nodeIndex.put(index, node);
+            node = node.next;
+        }
+        int removeIndex = index - (n - 1);
+        if (removeIndex <= 0) {
+            return head;
+        }
+        ListNode removeNode = nodeIndex.get(removeIndex);
+        if (removeIndex == 1) {
+            return removeNode.next;
+        }
+        ListNode preNode = nodeIndex.get(removeIndex - 1);
+        preNode.next = removeIndex == index ? null : removeNode.next;
         return head;
     }
 }
