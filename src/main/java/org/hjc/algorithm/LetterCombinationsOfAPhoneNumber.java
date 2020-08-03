@@ -1,9 +1,9 @@
 package org.hjc.algorithm;
 
 import com.alibaba.fastjson.JSON;
+import sun.security.util.Length;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 电话号码的字母组合
@@ -48,8 +48,40 @@ public class LetterCombinationsOfAPhoneNumber {
     url:https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/
      */
 
+    Map<Integer, char[]> numCharMap = new HashMap<Integer, char[]>(8);
+
+    public LetterCombinationsOfAPhoneNumber() {
+        numCharMap.put(2, new char[]{'a', 'b', 'c'});
+        numCharMap.put(3, new char[]{'d', 'e', 'f'});
+        numCharMap.put(4, new char[]{'g', 'h', 'i'});
+        numCharMap.put(5, new char[]{'j', 'k', 'l'});
+        numCharMap.put(6, new char[]{'m', 'n', 'o'});
+        numCharMap.put(7, new char[]{'p', 'q', 'r', 's'});
+        numCharMap.put(8, new char[]{'t', 'u', 'v'});
+        numCharMap.put(9, new char[]{'w', 'x', 'y', 'z'});
+    }
+
     public List<String> letterCombinations(String digits) {
         List<String> list = new ArrayList<String>();
+        getCombinationString(list, new StringBuilder(), 0, digits);
         return list;
+    }
+
+    private void getCombinationString(List<String> list, StringBuilder stringBuilder, int n, String digits) {
+        if (n >= digits.length()) {
+            return;
+        }
+        int digit = Integer.parseInt(String.valueOf(digits.charAt(n)));
+        char[] numChars = numCharMap.get(digit);
+        for (char numChar : numChars) {
+            StringBuilder subBuilder = new StringBuilder(stringBuilder);
+            subBuilder.append(numChar);
+            if (n == digits.length() - 1) {
+                // 最后一个数字了
+                list.add(subBuilder.toString());
+            } else {
+                getCombinationString(list, subBuilder, n + 1, digits);
+            }
+        }
     }
 }
