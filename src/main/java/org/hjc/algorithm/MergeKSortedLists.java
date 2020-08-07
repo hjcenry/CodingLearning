@@ -1,5 +1,7 @@
 package org.hjc.algorithm;
 
+import org.hjc.algorithm.common.ListNode;
+
 import java.util.*;
 
 /**
@@ -115,12 +117,4 @@ public class MergeKSortedLists {
         return head;
     }
 
-    static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-    }
 }

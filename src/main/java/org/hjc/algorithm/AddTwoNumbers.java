@@ -1,5 +1,7 @@
 package org.hjc.algorithm;
 
+import org.hjc.algorithm.common.ListNode;
+
 /**
  * 两数相加
  *
@@ -100,36 +102,4 @@ public class AddTwoNumbers {
         return headNode;
     }
 
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
-
-        static ListNode createNode(int num) {
-            return new ListNode(num);
-        }
-
-        ListNode createNext(int next) {
-            this.next = new ListNode(next);
-            return this.next;
-        }
-
-        @Override
-        public String toString() {
-            StringBuilder builder = new StringBuilder();
-            builder.append("[");
-            builder.append(val);
-            ListNode next = this.next;
-            while (next != null) {
-                builder.append(",");
-                builder.append(next.val);
-                next = next.next;
-            }
-            builder.append("]");
-            return builder.toString();
-        }
-    }
 }

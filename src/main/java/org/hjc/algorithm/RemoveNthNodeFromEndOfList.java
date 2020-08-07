@@ -1,5 +1,7 @@
 package org.hjc.algorithm;
 
+import org.hjc.algorithm.common.ListNode;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,15 +100,6 @@ public class RemoveNthNodeFromEndOfList {
         }
         end.next = end.next.next;
         return pre.next;
-    }
-
-    static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
     }
 }
 

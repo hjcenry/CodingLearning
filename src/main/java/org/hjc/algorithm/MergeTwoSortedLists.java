@@ -1,5 +1,7 @@
 package org.hjc.algorithm;
 
+import org.hjc.algorithm.common.ListNode;
+
 /**
  * 合并两个有序链表
  *
@@ -77,23 +79,6 @@ public class MergeTwoSortedLists {
         } else {
             l2.next = this.mergeTwoLists(l1, l2.next);
             return l2;
-        }
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
         }
     }
 
