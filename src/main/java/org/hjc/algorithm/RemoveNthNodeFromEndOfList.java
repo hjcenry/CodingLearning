@@ -99,13 +99,14 @@ public class RemoveNthNodeFromEndOfList {
         end.next = end.next.next;
         return pre.next;
     }
-}
 
-class ListNode {
-    int val;
-    ListNode next;
+    static class ListNode {
+        int val;
+        ListNode next;
 
-    ListNode(int x) {
-        val = x;
+        ListNode(int x) {
+            val = x;
+        }
     }
 }
+
