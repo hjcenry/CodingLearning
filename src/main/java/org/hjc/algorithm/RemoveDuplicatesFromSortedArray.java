@@ -1,5 +1,7 @@
 package org.hjc.algorithm;
 
+import java.util.Arrays;
+
 /**
  * 删除有序数组中的重复项
  *
@@ -9,7 +11,8 @@ package org.hjc.algorithm;
 public class RemoveDuplicatesFromSortedArray {
 
     public static void main(String[] args) {
-
+        System.out.println(new RemoveDuplicatesFromSortedArray().removeDuplicates(new int[]{1, 1, 2}));
+        System.out.println(new RemoveDuplicatesFromSortedArray().removeDuplicates(new int[]{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}));
     }
 
     /*
@@ -59,10 +62,6 @@ public class RemoveDuplicatesFromSortedArray {
     -100 <= nums[i] <= 100
     nums is sorted in non-decreasing order.
     
-    来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array
-    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-    
     给你一个有序数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。
     
     不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
@@ -102,14 +101,38 @@ public class RemoveDuplicatesFromSortedArray {
     0 <= nums.length <= 3 * 104
     -104 <= nums[i] <= 104
     nums 已按升序排列
-    
-    来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array
-    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-    
+
     
      */
     public int removeDuplicates(int[] nums) {
-        return 0;
+        // 去重后的总长度
+        int len = 0;
+        // 上一个数字
+        int lastNum = -105;
+        // 下一个下标
+        int nextIndex = -1;
+
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (num != lastNum) {
+                // 不重复数字
+                // 计算总长度
+                len++;
+                // 下一个下标不是-1，把数字挪过来，并且下标+1
+                if (nextIndex > -1) {
+                    nums[nextIndex] = num;
+                    nextIndex++;
+                }
+            } else {
+                // 重复数字
+                // 记录移除的index
+                if (nextIndex == -1) {
+                    nextIndex = i;
+                }
+            }
+            lastNum = num;
+        }
+        return len;
     }
+
 }
