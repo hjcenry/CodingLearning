@@ -1,5 +1,9 @@
 package org.hjc.algorithm;
 
+import com.sun.deploy.util.ArrayUtil;
+
+import java.util.Arrays;
+
 /**
  * 移除元素
  *
@@ -8,7 +12,7 @@ package org.hjc.algorithm;
  */
 public class RemoveElement {
     public static void main(String[] args) {
-
+        System.out.println(new RemoveElement().removeElement(new int[]{0, 1, 2, 2, 3, 0, 4, 2}, 2));
     }
 
     /*
@@ -106,6 +110,23 @@ public class RemoveElement {
     */
 
     public int removeElement(int[] nums, int val) {
-        return 0;
+        int len = nums.length;
+        int nextIndex = -1;
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+
+            if (num == val) {
+                // 移除元素
+                if (nextIndex == -1) {
+                    nextIndex = i;
+                }
+                len--;
+            } else if (nextIndex > -1) {
+                // 如果下个下标>-1，则把数字往这个坐标挪动，然后下标往后走
+                nums[nextIndex] = num;
+                nextIndex++;
+            }
+        }
+        return len;
     }
 }
