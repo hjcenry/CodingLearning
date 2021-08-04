@@ -24,15 +24,15 @@ public class ReverseInteger {
     Input: 120
     Output: 21
     Note:
-    Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+    Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,   231  − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
 
      给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
 
-    示例 1:
+    示例  1:
 
     输入: 123
     输出: 321
-     示例 2:
+      示例 2:
 
     输入: -123
     输出: -321
@@ -42,7 +42,7 @@ public class ReverseInteger {
     输出: 21
     注意:
 
-    假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
+    假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为  [−231,   231  − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
 
     url:https://leetcode-cn.com/problems/reverse-integer/
      */
@@ -99,7 +99,7 @@ public class ReverseInteger {
 
     看起来这道题就这么解决了，但请注意，题目上还有这么一句
 
-    假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−2^31,  2^31 − 1]。
+    假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为  [−2^31,   2^31  − 1]。
 
     也就是说我们不能用long存储最终结果，而且有些数字可能是合法范围内的数字，但是反转过来就超过范围了。
     假设有1147483649这个数字，它是小于最大的32位整数2147483647的，但是将这个数字反转过来后就变成了9463847411，这就比最大的32位整数还要大了，这样的数字是没法存到int里面的，所以肯定要返回0(溢出了)。

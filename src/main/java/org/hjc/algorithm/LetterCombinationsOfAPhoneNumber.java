@@ -1,7 +1,6 @@
 package org.hjc.algorithm;
 
 import com.alibaba.fastjson.JSON;
-import sun.security.util.Length;
 
 import java.util.*;
 
@@ -32,7 +31,7 @@ public class LetterCombinationsOfAPhoneNumber {
 
     Although the above answer is in lexicographical order, your answer could be in any order you want.
 
-    给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
+    给定一个仅包含数字  2-9  的字符串，返回所有它能表示的字母组合。
 
     给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
 

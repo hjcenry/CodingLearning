@@ -18,7 +18,7 @@ public class PalindromeNumber {
     }
 
     /*
-    Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+    Determine whether an integer is a palindrome. An integer  is  a  palindrome when it  reads the same backward as forward.
 
     Example 1:
 
@@ -36,7 +36,7 @@ public class PalindromeNumber {
     Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
     Follow up:
 
-    Could you solve it without converting the integer to a string?
+    Could you solve  it without converting the integer to a string?
 
     判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
 
@@ -44,7 +44,7 @@ public class PalindromeNumber {
 
     输入: 121
     输出: true
-    示例 2:
+    示例  2:
 
     输入: -121
     输出: false

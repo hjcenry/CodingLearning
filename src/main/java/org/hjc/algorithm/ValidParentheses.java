@@ -28,7 +28,7 @@ public class ValidParentheses {
 
     Open brackets must be closed by the same type of brackets.
     Open brackets must be closed in the correct order.
-    Note that an empty string is also considered valid.
+    Note that an empty string is  also considered valid.
 
     Example 1:
 
@@ -51,7 +51,7 @@ public class ValidParentheses {
     Input: "{[]}"
     Output: true
 
-    给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+    给定一个只包括 '('，')'，'{'，'}'，'['，']'  的字符串，判断字符串是否有效。
 
     有效字符串需满足：
 
@@ -63,19 +63,19 @@ public class ValidParentheses {
 
     输入: "()"
     输出: true
-    示例 2:
+    示例  2:
 
     输入: "()[]{}"
     输出: true
-    示例 3:
+    示例  3:
 
     输入: "(]"
     输出: false
-    示例 4:
+    示例  4:
 
     输入: "([)]"
     输出: false
-    示例 5:
+    示例  5:
 
     输入: "{[]}"
     输出: true

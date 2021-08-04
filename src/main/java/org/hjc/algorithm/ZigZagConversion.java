@@ -28,8 +28,8 @@ public class ZigZagConversion {
     Output: "PAHNAPLSIIGYIR"
     Example 2:
 
-    Input: s = "PAYPALISHIRING", numRows = 4
-    Output: "PINALSIGYAHRPI"
+    Input: s = "PAYPALISHIRING", numRows =  4
+    Output:  "PINALSIGYAHRPI"
     Explanation:
 
     P     I    N
@@ -37,8 +37,8 @@ public class ZigZagConversion {
     Y A   H R
     P     I
 
-    将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
-    比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：
+    将一个给定字符串根据给定的行数，以从上往下、从左到右进行  Z 字形排列。
+    比如输入字符串为 "LEETCODEISHIRING"  行数为 3 时，排列如下：
 
     L   C   I   R
     E T O E S I I G
@@ -47,14 +47,14 @@ public class ZigZagConversion {
     请你实现这个将字符串进行指定行数变换的函数：
 
     string convert(string s, int numRows);
-    示例 1:
+    示例  1:
 
     输入: s = "LEETCODEISHIRING", numRows = 3
     输出: "LCIRETOESIIGEDHN"
-    示例 2:
+    示例  2:
 
-    输入: s = "LEETCODEISHIRING", numRows = 4
-    输出: "LDREOEIIECIHNTSG"
+    输入: s = "LEETCODEISHIRING", numRows =  4
+    输出:  "LDREOEIIECIHNTSG"
     解释:
 
     L     D     R
