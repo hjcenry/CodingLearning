@@ -9,6 +9,9 @@ import org.hjc.algorithm.AddTwoNumbers;
  * @date 2020/8/7 16:43
  */
 public class ListNode {
+
+    public static final boolean ONLY_PRINT_VAL = false;
+
     public int val;
     public ListNode next;
 
@@ -35,6 +38,9 @@ public class ListNode {
 
     @Override
     public String toString() {
+        if (ONLY_PRINT_VAL) {
+            return val + "";
+        }
         StringBuilder builder = new StringBuilder();
         builder.append("[");
         builder.append(val);
@@ -47,4 +53,5 @@ public class ListNode {
         builder.append("]");
         return builder.toString();
     }
+
 }
