@@ -1,9 +1,5 @@
 package org.hjc.algorithm;
 
-import com.sun.deploy.util.ArrayUtil;
-
-import java.util.Arrays;
-
 /**
  * 移除元素
  *
