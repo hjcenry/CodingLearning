@@ -13,7 +13,7 @@ import java.util.*;
  * @date 2023/10/18 0:34
  **/
 public class BFSSearchPath {
-    protected HashMap<Vector2, BFSNode> nodeList = new HashMap<>();
+    protected Map<Vector2, BFSNode> nodeList = new HashMap<>();
     protected int width;
     protected int height;
 

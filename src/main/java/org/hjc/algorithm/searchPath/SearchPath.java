@@ -76,7 +76,7 @@ public class SearchPath {
         Vector2 end = new Vector2(13, 0);
         long startTime = System.currentTimeMillis();
 
-        int loop = 1000;
+        int loop = 1;
         // 广度优先搜索
         for (int i = 0; i < loop; i++) {
             searchPathUseBFS(start, end);
@@ -84,9 +84,9 @@ public class SearchPath {
         long bfsCostTime = System.currentTimeMillis() - startTime;
         // 深度优先搜索
         startTime = System.currentTimeMillis();
-//        for (int i = 0; i < loop; i++) {
-//            searchPathUseDFS(start, end);
-//        }
+        for (int i = 0; i < loop; i++) {
+            searchPathUseDFS(start, end);
+        }
         long dfsCostTime = System.currentTimeMillis() - startTime;
         // A星搜索
         startTime = System.currentTimeMillis();
