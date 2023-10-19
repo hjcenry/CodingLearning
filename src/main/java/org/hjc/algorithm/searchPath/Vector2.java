@@ -1,5 +1,6 @@
 package org.hjc.algorithm.searchPath;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -43,5 +44,29 @@ public class Vector2 {
 
     public int getY() {
         return y;
+    }
+
+    public Vector2 createUp() {
+        Vector2 clonePoint = this.clonePoint();
+        clonePoint.y = clonePoint.y - 1;
+        return clonePoint;
+    }
+
+    public Vector2 createDown() {
+        Vector2 clonePoint = this.clonePoint();
+        clonePoint.y = clonePoint.y + 1;
+        return clonePoint;
+    }
+
+    public Vector2 createLeft() {
+        Vector2 clonePoint = this.clonePoint();
+        clonePoint.x = clonePoint.x - 1;
+        return clonePoint;
+    }
+
+    public Vector2 createRight() {
+        Vector2 clonePoint = this.clonePoint();
+        clonePoint.x = clonePoint.x + 1;
+        return clonePoint;
     }
 }

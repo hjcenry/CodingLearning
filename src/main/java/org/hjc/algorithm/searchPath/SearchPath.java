@@ -1,7 +1,6 @@
 package org.hjc.algorithm.searchPath;
 
-import org.hjc.algorithm.searchPath.aStar.MapInfo;
-import org.hjc.algorithm.searchPath.aStar.Node;
+import org.hjc.algorithm.searchPath.entry.*;
 
 import java.util.*;
 
@@ -17,7 +16,26 @@ public class SearchPath {
     // 阻碍物格子
     protected static final String X = "口";
 
-    protected static final String[][] MAP = new String[][]{
+    protected static final String[][] EMPTY_MAP = new String[][]{
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+            new String[]{_, _, _, _, _, _, _, _, _, _, _, _, _, _, _},
+    };
+
+//    protected static final String[][] MAP = EMPTY_MAP;
+    protected  static final String[][] MAP = new String[][]{
             new String[]{X, _, _, _, X, _, _, _, _, _, _, _, X, _, _},
             new String[]{_, _, X, X, X, X, _, _, X, X, X, X, X, X, _},
             new String[]{_, _, X, _, _, X, X, _, X, _, _, _, X, _, _},
@@ -56,38 +74,57 @@ public class SearchPath {
         Vector2 start = new Vector2(5, 14);
         // 终点
         Vector2 end = new Vector2(13, 0);
+        long startTime = System.currentTimeMillis();
+
+        int loop = 1000;
         // 广度优先搜索
-        // searchPathUseBFS(start, end);
+        for (int i = 0; i < loop; i++) {
+            searchPathUseBFS(start, end);
+        }
+        long bfsCostTime = System.currentTimeMillis() - startTime;
+        // 深度优先搜索
+        startTime = System.currentTimeMillis();
+//        for (int i = 0; i < loop; i++) {
+//            searchPathUseDFS(start, end);
+//        }
+        long dfsCostTime = System.currentTimeMillis() - startTime;
         // A星搜索
-        searchPathUseAStar(start, end);
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < loop; i++) {
+            searchPathUseAStar(start, end);
+        }
+        long aStarCostTime = System.currentTimeMillis() - startTime;
+
+        System.out.println("寻路次数:" + loop);
+        System.out.println("BFS耗时:" + bfsCostTime);
+        System.out.println("DFS耗时:" + dfsCostTime);
+        System.out.println("A星耗时:" + aStarCostTime);
+
     }
 
     public void searchPathUseAStar(Vector2 startPoint, Vector2 endPoint) {
         String[][] aStarMap = cloneArray(MAP);
-        MapInfo info = new MapInfo(aStarMap, width, height, new Node(startPoint.x, startPoint.y), new Node(endPoint.x, endPoint.y));
+        AStarMapInfo info = new AStarMapInfo(aStarMap, width, height, new AStarNode(startPoint.x, startPoint.y), new AStarNode(endPoint.x, endPoint.y));
         AStarSearchPath aStarSearchPath = new AStarSearchPath();
         aStarSearchPath.start(info);
 
         printMap(aStarMap);
     }
 
+    public void searchPathUseDFS(Vector2 startPoint, Vector2 endPoint) throws Exception {
+        String[][] dfsMap = cloneArray(MAP);
+        DFSMapInfo info = new DFSMapInfo(dfsMap, width, height, startPoint, endPoint);
+        DFSSearchPath DFSSearchPath = new DFSSearchPath();
+        DFSSearchPath.start(info);
+
+        printMap(dfsMap);
+    }
+
     public void searchPathUseBFS(Vector2 startPoint, Vector2 endPoint) throws Exception {
-        BFSSearchPath bfsSearchPath = new BFSSearchPath();
-
         String[][] bfsMap = cloneArray(MAP);
-        List<List<Vector2>> allPathList = new ArrayList<>();
-        List<Vector2> pathList = new ArrayList<>();
-        pathList.add(startPoint);
-        bfsSearchPath.doSearchPathUseBFS(startPoint, endPoint, bfsMap, pathList, allPathList);
-
-        System.out.println("最短路径长度:" + bfsSearchPath.minBFSPathCount);
-        System.out.println("总共找到路径数:" + allPathList.size());
-        for (int i = 0; i < allPathList.size(); i++) {
-            System.out.println("路径[" + (i + 1) + "]长度:" + allPathList.get(i).size());
-        }
-        if (bfsSearchPath.minBFSPathList != null) {
-            bfsSearchPath.minBFSPathList.forEach(path -> bfsMap[path.y][path.x] = PASSED);
-        }
+        BFSMapInfo info = new BFSMapInfo(bfsMap, width, height, new BFSNode(startPoint), new BFSNode(endPoint));
+        BFSSearchPath bFSSearchPath = new BFSSearchPath();
+        bFSSearchPath.start(info);
 
         printMap(bfsMap);
     }

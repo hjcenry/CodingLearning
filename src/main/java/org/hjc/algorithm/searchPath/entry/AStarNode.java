@@ -1,4 +1,4 @@
-package org.hjc.algorithm.searchPath.aStar;
+package org.hjc.algorithm.searchPath.entry;
 
 import org.hjc.algorithm.searchPath.Vector2;
 
@@ -9,22 +9,22 @@ import org.hjc.algorithm.searchPath.Vector2;
  * @version 1.0
  * @date 2023/10/18 0:45
  **/
-public class Node implements Comparable<Node> {
+public class AStarNode implements Comparable<AStarNode> {
 
     // 坐标
     public Vector2 vector2;
     // 父结点
-    public Node parent;
+    public AStarNode parent;
     // G：是个准确的值，是起点到当前结点的代价
     public int G;
     // H：是个估值，当前结点到目的结点的估计代价
     public int H;
 
-    public Node(int x, int y) {
+    public AStarNode(int x, int y) {
         this.vector2 = new Vector2(x, y);
     }
 
-    public Node(Vector2 vector2, Node parent, int g, int h) {
+    public AStarNode(Vector2 vector2, AStarNode parent, int g, int h) {
         this.vector2 = vector2;
         this.parent = parent;
         G = g;
@@ -32,7 +32,7 @@ public class Node implements Comparable<Node> {
     }
 
     @Override
-    public int compareTo(Node o) {
+    public int compareTo(AStarNode o) {
         if (o == null) {
             return -1;
         }
