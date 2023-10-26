@@ -52,8 +52,34 @@ public class CommonSort {
         end = System.currentTimeMillis();
         System.out.println("插入排序：耗时:" + (end - start));
         System.out.println(JSON.toJSONString(Collections.singletonList(arr3)));
-
-
+        // 选择排序
+        int[] arr4 = arr.clone();
+        start = System.currentTimeMillis();
+        selectSort(arr4);
+        end = System.currentTimeMillis();
+        System.out.println("选择排序：耗时:" + (end - start));
+        System.out.println(JSON.toJSONString(Collections.singletonList(arr4)));
+        // 堆排序
+        int[] arr5 = arr.clone();
+        start = System.currentTimeMillis();
+        heapSort(arr5);
+        end = System.currentTimeMillis();
+        System.out.println("堆排序：耗时:" + (end - start));
+        System.out.println(JSON.toJSONString(Collections.singletonList(arr5)));
+        // 归并排序
+        int[] arr6 = arr.clone();
+        start = System.currentTimeMillis();
+        mergeSort(arr6);
+        end = System.currentTimeMillis();
+        System.out.println("归并排序：耗时:" + (end - start));
+        System.out.println(JSON.toJSONString(Collections.singletonList(arr6)));
+        // 桶排序
+        int[] arr7 = arr.clone();
+        start = System.currentTimeMillis();
+        bucketSort(arr7);
+        end = System.currentTimeMillis();
+        System.out.println("桶排序：耗时:" + (end - start));
+        System.out.println(JSON.toJSONString(Collections.singletonList(arr7)));
     }
 
     /**
@@ -112,7 +138,10 @@ public class CommonSort {
             }
         }
 
-        // 这一轮快排结束，交换相遇点与基准点
+        // 这一轮快排结束，交换相遇点与基准点，把基准数放在对应的位置上
+        // 因为要把基准数和相遇点交换，由于if判断包含等于，那么从左往右就会找到比基准数小的数，从右往左就会找到比基准数大的数，会越过基准数
+        // 因此当基准点小于相遇点时（基准点取第一位数），必须保证从先移动右指针，再移动左指针；当基准点大于相遇点时（基准点取最后一位位数），必须保证从先移动左指针，再移动右指针
+        // 如果一定要随机基准数，有个简单的改进方法，就是随机一位数，与首位，或最后一位先做一下交换
         tmp = arr[baseIndex];
         arr[baseIndex] = arr[right];
         arr[right] = tmp;
@@ -128,6 +157,42 @@ public class CommonSort {
      * @param arr
      */
     public void insertSort(int[] arr) {
+        //
+    }
+
+    /**
+     * 选择排序
+     *
+     * @param arr
+     */
+    public void selectSort(int[] arr) {
+
+    }
+
+    /**
+     * 堆排序
+     *
+     * @param arr
+     */
+    public void heapSort(int[] arr) {
+
+    }
+
+    /**
+     * 归并排序
+     *
+     * @param arr
+     */
+    public void mergeSort(int[] arr) {
+
+    }
+
+    /**
+     * 桶排序
+     *
+     * @param arr
+     */
+    public void bucketSort(int[] arr) {
 
     }
 }
