@@ -137,7 +137,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
      */
     public static int lengthOfLongestSubstring2(String s) {
         int n = s.length();
-        Set<Character> set = new HashSet<Character>();
+        Set<Character> set = new HashSet<>();
         int ans = 0, i = 0, j = 0;
         while (i < n && j < n) {
             // try to extend the range [i, j]
@@ -159,32 +159,49 @@ public class LongestSubstringWithoutRepeatingCharacters {
      * @return
      */
     public static int lengthOfLongestSubstring3(String s) {
-        int n = s.length(), ans = 0;
-        Map<Character, Integer> map = new HashMap<Character, Integer>(); // current index of character
+        int len = s.length();
+        // 最大长度
+        int maxLength = 0;
+        // 使用Map结构缓存字符和索引的映射
+        Map<Character, Integer> map = new HashMap<>();
+        // current index of character
         // try to extend the range [i, j]
-        for (int j = 0, i = 0; j < n; j++) {
-            char c = s.charAt(j);
+        for (int right = 0, left = 0; right < len; right++) {
+            char c = s.charAt(right);
             if (map.containsKey(c)) {
-                i = Math.max(map.get(s.charAt(j)), i);
+                // 找到重复子串，左指针跳到最后的重复为止
+                left = Math.max(map.get(c), left);
             }
-            ans = Math.max(ans, j - i + 1);
-            map.put(c, j + 1);
+            int curLength = right - left + 1;
+            // 取最大长度
+            maxLength = Math.max(maxLength, curLength);
+            // 缓存字符和下标映射
+            map.put(c, right + 1);
         }
-        return ans;
+        return maxLength;
 
 //      Java（假设字符集为 ASCII 128）
 //      以前的我们都没有对字符串 s 所使用的字符集进行假设。
-//      当我们知道该字符集比较小的时侯，我们可以用一个整数数组作为直接访问表来替换 Map。
+//      当我们知道该字符集比较小的时侯，我们可以用一个整数数组作为直接访问表来替换Map。
 //
-//        int n = s.length(), ans = 0;
-//        int[] index = new int[128]; // current index of character
-//        // try to extend the range [i, j]
-//        for (int j = 0, i = 0; j < n; j++) {
-//            i = Math.max(index[s.charAt(j)], i);
-//            ans = Math.max(ans, j - i + 1);
-//            index[s.charAt(j)] = j + 1;
+//        int len = s.length();
+//        int maxLength = 0;
+//        // 使用128位数组缓存下标
+//        int[] index = new int[128];
+//        // 滑动窗口
+//        for (int right = 0, left = 0; right < len; right++) {
+//            char c = s.charAt(right);
+//            // 取index对应字符的缓存下标
+//            // 如果没有，则是默认值0
+//            // 若一旦有非零值，则代表有相同字符缓存到index数组中，则下标可跳到最后重复为止，再计算出不重复长度
+//            left = Math.max(index[c], left);
+//            int curLength = right - left + 1;
+//            // 取最大长度
+//            maxLength = Math.max(maxLength, curLength);
+//            // 缓存字符和下标映射
+//            index[c] = right + 1;
 //        }
-//        return ans;
+//        return maxLength;
     }
 
 }
