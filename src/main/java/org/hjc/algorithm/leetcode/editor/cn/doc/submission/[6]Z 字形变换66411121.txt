@@ -1,0 +1,38 @@
+class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows <= 1) {
+            return s;
+        }
+        int len = s.length();
+        // 新的字符数组
+        char[] newStrChars = new char[len];
+//        StringBuilder newStrBuilder = new StringBuilder(len);
+        int charIndex = 0;
+        for (int row = 0; row < numRows; row++) {
+            // 逐行读取
+            for (int col = 0; col < len; col = col + numRows - 1) {
+                // 读取列按照相同规律一段一段读取
+                if (row != 0 && row != numRows - 1 && col > 0) {
+                    // 非首尾两行先取中间的数:当前列的第一行的index减去行数（即从当前列的顶部往前推row个数，就是要取得的下标）
+                    int midIndex = col * 2 - row;
+                    if (midIndex >= len) {
+                        break;
+                    }
+                    newStrChars[charIndex++] = s.charAt(midIndex);
+//                    newStrBuilder.append(s.charAt(midIndex));
+                }
+                // 取竖线列上的数，根据行数和列数获取元素下标
+                int strIndex = 2 * col + row;
+                if (strIndex >= len) {
+                    break;
+                }
+                newStrChars[charIndex++] = s.charAt(strIndex);
+//                newStrBuilder.append(s.charAt(strIndex));
+            }
+        }
+        return String.copyValueOf(newStrChars, 0, len);
+//        return newStrBuilder.toString();
+    }
+}
+//runtime:2 ms
+//memory:38.9 MB

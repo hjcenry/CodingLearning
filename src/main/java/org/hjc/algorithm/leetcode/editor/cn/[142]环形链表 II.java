@@ -59,6 +59,8 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import org.hjc.algorithm.leetcode.editor.cn.ListNode;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

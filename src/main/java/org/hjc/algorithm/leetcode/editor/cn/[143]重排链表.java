@@ -43,6 +43,8 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 
+import org.hjc.algorithm.leetcode.editor.cn.ListNode;
+
 import java.util.ArrayList;
 import java.util.List;
 
