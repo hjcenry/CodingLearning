@@ -3,15 +3,14 @@ package org.hjc.algorithm.leetcode.editor.cn;
 /**
  * @author hejincheng
  * @version 1.0
- * @date 2024/1/5 15:56
+ * @date 2024/1/6 16:33
  **/
-public class ListNode {
-
+public class TreeNode {
     public int val;
-    public ListNode next;
+    public TreeNode left;
+    public TreeNode right;
 
-    ListNode(int x) {
+    TreeNode(int x) {
         val = x;
-        next = null;
     }
 }
